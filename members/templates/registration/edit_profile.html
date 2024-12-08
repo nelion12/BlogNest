@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Profile {% endblock %}
+
+{% block content %}
+
+<h1>Edit Profile</h1>
+<br/><br/>
+
+<h3>{{ user.profile.bio|default:"No bio available" }}</h3>
+<br/><br/>
+
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Update Profile</button>
+    </form>
+</div>
+
+{% endblock %}
